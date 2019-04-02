@@ -23,4 +23,4 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 
 ## How I use
 
-I  use  Xampp  as  a  server and  you  should create  a  new database from phpMyadmin then migrate from cmd
+I  use  Xampp  as  a  server and  you  should create  a  new database from phpMyadmin, change database from the project (.env) then migrate from cmd
