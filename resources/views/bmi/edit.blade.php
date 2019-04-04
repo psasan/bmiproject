@@ -18,6 +18,21 @@
                     @csrf
                     <div>
                         <center>{{ Html::image('img/capture.jpg', 'gambar', array('width'=>'260','height'=>'153')) }}</center>
+                        <center>
+                        <h4 style="background:#f4fff4">Status : 
+                        @if($bmi->bmi <= 18.4)
+                            <strong style="color:grey">Underweight</strong>
+                            @elseif($bmi->bmi >= 18.5 && $bmi->bmi <= 24.9)
+                            <strong style="color:green">Normal</strong>
+                            @elseif($bmi->bmi >= 25 && $bmi->bmi <= 29.9)
+                            <strong style="color:#e9e907">Overweight</strong>
+                            @elseif($bmi->bmi >= 30 && $bmi->bmi <= 34.9)
+                            <strong style="color:orange">Obese</strong>
+                            @else
+                            <strong style="color:red">Extremly Obese</strong>
+                            @endif
+                        </h4>
+                        </center>
                         <table class="table" style="background:#05bd53;color:white">
                             <thead>
                                 <th><center>Tanggal</center></th>

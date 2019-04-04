@@ -21,66 +21,89 @@
                         </div>
                     @endif
 
-                    <canvas id="myChart" width="400" height="400" style="background:white"></canvas><br>
-                    <script>
+                    @if(!empty($list_bmi[0]))
+                        <canvas id="myChart" width="400" height="400" style="background:white"></canvas><br>
 
-                    var Weight = @json($berat);
-                    var Dates = @json($tanggal);
-                    var BMI = @json($bmi);
+                        <script>
+                        var Weight = @json($berat);
+                        var Height = @json($tinggi);
+                        var Dates = @json($tanggal);
+                        var BMI = @json($bmi);
 
-                    var ctx = document.getElementById('myChart');
-                    var myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: Dates,
-                            datasets: [{
-                                label: 'Data Berat',
-                                data: Weight,
-                                backgroundColor: [
-                                    'rgba(82, 255, 155, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(0, 164, 69, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            },{
-                                label: 'Data BMI',
-                                data: BMI,
-                                backgroundColor: [
-                                    'rgba(155, 220, 251, 0.6)'
-                                ],
-                                borderColor: [
-                                    'rgba(0, 173, 255, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
+                        var ctx = document.getElementById('myChart');
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Dates,
+                                datasets: [{
+                                    label: 'Data Tinggi',
+                                    data: Height,
+                                    backgroundColor: [
+                                        'rgba(255, 91, 50, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 30, 64, 1)'
+                                    ],
+                                    borderWidth: 2
+                                },{
+                                    label: 'Data Berat',
+                                    data: Weight,
+                                    backgroundColor: [
+                                        'rgba(82, 255, 155, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(0, 164, 69, 1)'
+                                    ],
+                                    borderWidth: 2
+                                },{
+                                    label: 'Data BMI',
+                                    data: BMI,
+                                    backgroundColor: [
+                                        'rgba(155, 220, 251, 0.6)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(0, 173, 255, 1)'
+                                    ],
+                                    borderWidth: 2
                                 }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
                             }
-                        }
-                    });
-                    </script>
+                        });
+                        </script>
+                    @endif
                     
                     <table class="table table-striped" style="background:#03c655;color:white">
                         <tr>
-                            <th><center>Nama</center></th>
-                            <td><center>{{ auth::user()->name }}</center></td>
+                            <th></th>
+                            <th><center>Sebelum</center></th>
+                            <th><center>Sesudah</center></th>
+                            <th><center>Selisih</center></th>
                         </tr>
                         <tr>
-                            <th><center>Tanggal Lahir</center></th>
-                        <td><center>{{ auth::user()->born }}</center></td>
+                            <th><center>Tinggi</center></td>
+                            <td><center>{{ $firstbmi->tinggi }} cm</center></td>
+                            <td><center>{{ $lastbmi->tinggi }} cm</center></td>
+                            <td><center>~ {{ $numtinggi }} cm</center></td>
                         </tr>
                         <tr>
-                            <th><center>Jenis Kelamin</center></th>
-                            <td><center>{{ auth::user()->gender }}</center></td>
+                            <th><center>Berat</center></td>
+                            <td><center>{{ $firstbmi->berat }} kg</center></td>
+                            <td><center>{{ $lastbmi->berat }} kg</center></td>
+                            <td><center>~ {{ $numberat }} kg</center></td>
+                        </tr>
+                        <tr>
+                            <th><center>BMI</center></td>
+                            <td><center>{{ $firstbmi->bmi }}</center></td>
+                            <td><center>{{ $lastbmi->bmi }}</center></td>
+                            <td><center>~ {{ $numbmi }}</center></td>
                         </tr>
                     </table>
                     <!--
@@ -89,19 +112,19 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-md-6">
             <div class="card" style="background:#aaffae">
-                <div class="card-header" style="background:#00a445;color:white"><center>Data</center></div>
-
+                <div class="card-header" style="background:#00a445;color:white"><center>Data Harian</center></div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-                    @if(!empty($list_bmi))
+                    @if(!empty($list_bmi[0]))
                         <div id="bmi">
-                            <table class="table table-responsive-sm" style="background:#03c655;color:white">
+                            <table class="table table-responsive-sm " style="background:#03c655;color:white">
                                 <thead style="background:#00a445">
                                     <th><center>Tanggal</center></th>
                                     <th>Tinggi</th>
@@ -114,7 +137,7 @@
                                     <?php foreach($list_bmi as $bmi):?>
                                     <tr>
                                         @if(Auth::id() == $bmi->id_user)
-                                            <td><center>{{ date('d-m-Y',strtotime($bmi->tanggal)) }}</center></td>
+                                            <td><center>{{ date('D d/m/y',strtotime($bmi->tanggal)) }}</center></td>
                                             <td>{{ $bmi->tinggi }}</td>
                                             <td>{{ $bmi->berat }}</td>
                                             <td>{{ $bmi->bmi }}</td>
@@ -142,18 +165,18 @@
                                     <?php endforeach ?>
                                 </tbody>
                             </table>
+                            <div class="navbar">
+                                <div class="navbar navbar-nav navbar-left">
+                                    <h5>Jumlah: {{ $count_bmi }}</h5>
+                                </div>
+                                <div class="navbar navbar-nav navbar-right">
+                                    {{ $list_bmi->links() }}
+                                </div>    
+                            </div>
                         </div>
                     @else
-                        <p>Data BMI belum ada!</p>
+                        <center><p>Data BMI belum ada!</p></center>
                     @endif
-                    <div class="navbar">
-                        <div class="navbar navbar-nav navbar-left">
-                            <h5>Jumlah: {{ $count_bmi }}</h5>
-                        </div>
-                        <div class="navbar navbar-nav navbar-right">
-                            {{ $list_bmi->links() }}
-                        </div>    
-                    </div>
                     <div>
                         <center><a href="create" class="btn btn-success" 
                         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);">Tambah Data</a></center>

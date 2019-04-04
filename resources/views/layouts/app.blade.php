@@ -64,13 +64,13 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}" style="color:white">{{ __('Register') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}" style="color:white">{{ __('Login') }}</a>
                         </li>
+                        
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color:white" href="/" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -78,12 +78,21 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('info') }}">
-                                        {{ __('Info') }}
+                                    <a class="dropdown-item" href="{{ url('profil') }}">
+                                        {{ Html::image('/img/profil.png', 'profil', ['style'=>'width:25%;padding-right:5px']) }}
+                                        {{ __('Profil') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('home') }}">
+                                        {{ Html::image('/img/bmi.png', 'bmi', ['style'=>'width:25%;padding-right:5px']) }}
+                                        {{ __('My BMI') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('about') }}">
+                                        {{ Html::image('/img/about.png', 'bmi', ['style'=>'width:25%;padding-right:5px']) }}
+                                        {{ __('About') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ Html::image('/img/logout.png', 'bmi', ['style'=>'width:25%;padding-right:5px']) }}
                                         {{ __('Logout') }}
                                     </a>
 

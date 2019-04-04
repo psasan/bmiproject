@@ -66,10 +66,10 @@
     </head>
     <body style="background:#00a445">
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
+            @if(Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a style="color:white">{{ auth::user()->name }}</a>
+                        <a style="color:white" href="{{ url('profil') }}">{{ auth::user()->name }}</a>
                         <a href="{{ route('logout') }}" style="color:white">Logout</a>
                     @else
                         <a href="{{ route('register') }}" style="color:white">Register</a>
@@ -90,11 +90,11 @@
                 @if(Route::has('login'))
                     @auth
                     <div class="links">
-                        <a href="{{ url('/home') }}" style="color:white"><<< See My Bmi >>></a>
+                        <a href="{{ url('/home') }}" style="color:white"><< See My Bmi >></a>
                     </div>
                     @else
                     <div class="links">
-                        <a href="create" style="color:white"><<< Calculate BMI >>></a>
+                        <a href="create" style="color:white"><< Calculate BMI >></a>
                     </div>
                     @endauth
                 @endif

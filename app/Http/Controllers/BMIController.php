@@ -136,10 +136,4 @@ class BMIController extends Controller
         Session::flash('flash_message', 'Data telah diupdate!');
         return redirect('home');
     }
-
-    public function detail($id){
-        $halaman = 'bmi';
-        $bmi = BMI::findOrFail($id);
-        return view('bmi.detail', compact('halaman','bmi'));
-    }
 }

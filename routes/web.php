@@ -16,9 +16,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'PagesController@homepage');
 Route::get('about', 'PagesController@about');
-Route::get('info', 'PagesController@info');
 
 Route::get('user', 'UserController@index');
+Route::get('user/edit/{user}', 'UserController@edit');
+Route::patch('user/{user}', 'UserController@update');
+Route::get('profil', 'UserController@profil');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('create', 'BMIController@create');

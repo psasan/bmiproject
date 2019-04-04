@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\BMI;
 
@@ -138,5 +139,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect('user');
+    }
+
+    public function profil(){
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+        //return compact('user');
+        return view('user.profil');
     }
 }

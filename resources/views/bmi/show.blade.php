@@ -34,6 +34,7 @@
                                 <center>
                                     You are at 
                                     @if($bmi->bmi <= 18.4)
+                                    at Low Risk *
                                     @elseif($bmi->bmi >= 18.5 && $bmi->bmi <= 24.9)
                                         at Low Risk
                                     @elseif($bmi->bmi >= 25 && $bmi->bmi <= 29.9)

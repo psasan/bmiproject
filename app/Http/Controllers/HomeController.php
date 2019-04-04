@@ -23,6 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $id = Auth::id();
@@ -34,18 +35,43 @@ class HomeController extends Controller
         
         $i = 0;
         $counter = 0;
-        
-        do{
-            if($data[$i]['id_user']==$id){
-                $bmi[$counter] = $data[$i]['bmi'];
-                $berat[$counter] = $data[$i]['berat'];
-                $tanggal[$counter] = date('d-m',strtotime($data[$i]['tanggal']));
-                $counter++;
-            }
-            $i++;
-        }while($i<$iakhir);
+        if($count_bmi!=0){
+            do{
+                if($data[$i]['id_user']==$id){
+                    $bmi[$counter] = $data[$i]['bmi'];
+                    $berat[$counter] = $data[$i]['berat'];
+                    $tinggi[$counter] = $data[$i]['tinggi'];
+                    $tanggal[$counter] = date('d/m',strtotime($data[$i]['tanggal']));
+                    $counter++;
+                }
+                $i++;
+            }while($i<$iakhir);
+        }
+        else{
+            $bmi[] = null;
+            $berat[] = null;
+            $tinggi[] = null;
+            $tanggal[] = null;
+        }
 
-        //return compact('count_bmi', 'berat', 'tanggal');
-        return view('home', compact('list_bmi', 'count_bmi', 'berat', 'tanggal', 'bmi'));
+        
+        $firstbmi = $data->where('id_user',$id)->first();
+        $lastbmi = $data->where('id_user',$id)->last();
+        $numtinggi = $firstbmi->tinggi - $lastbmi->tinggi;
+        $numberat = $firstbmi->berat - $lastbmi->berat;
+        $numbmi = $firstbmi->bmi - $lastbmi->bmi;
+
+        if($numtinggi < 0){
+            $numtinggi = $numtinggi * -1;
+        }
+        if($numberat < 0){
+            $numberat = $numberat * -1;
+        }
+        if($numbmi < 0){
+            $numbmi = $numbmi * -1;
+        }
+
+        return view('home', compact('list_bmi', 'count_bmi', 'berat', 'tinggi', 'tanggal', 'bmi', 'firstbmi', 'lastbmi', 'numtinggi', 'numberat', 'numbmi'));
+        
     }
 }
